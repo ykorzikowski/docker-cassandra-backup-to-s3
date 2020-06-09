@@ -13,12 +13,12 @@ ENV LANG C.UTF-8
 # add a simple script that can auto-detect the appropriate JAVA_HOME value
 # based on whether the JDK or only the JRE is installed
 RUN { \
-		echo '#!/bin/sh'; \
-		echo 'set -e'; \
-		echo; \
-		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-	} > /usr/local/bin/docker-java-home \
-	&& chmod +x /usr/local/bin/docker-java-home
+        echo '#!/bin/sh'; \
+        echo 'set -e'; \
+        echo; \
+        echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+    } > /usr/local/bin/docker-java-home \
+    && chmod +x /usr/local/bin/docker-java-home
 
 RUN apk -Uuv --no-cache add \
     bash \
@@ -27,7 +27,7 @@ RUN apk -Uuv --no-cache add \
     python \
     py-pip \
     dcron \
-		openjdk8="$JAVA_ALPINE_VERSION" && \
+        openjdk8="$JAVA_ALPINE_VERSION" && \
     [ "$JAVA_HOME" = "$(docker-java-home)" ] && \
     pip install awscli
 
