@@ -16,9 +16,7 @@ tar -cvzf ${FILENAME} $dirs
 if [[ -z ${CASSANDRA_BACKUPS} ]]; then
   echo "-- Pushing snapshots to S3... --"
 
-  aws s3 mv ${FILENAME} s3://${AWS_BUCKET_NAME} \
-          --sse-kms-key-id ${AWS_KMS_ID} \
-          --sse aws:kms
+  aws s3 ${AWS_ARGS} mv ${FILENAME} s3://${AWS_BUCKET_NAME}
 
   echo "-- S3 backup complete! --"
 else

@@ -10,7 +10,6 @@ else
   if [ -z "${AWS_BUCKET_NAME}" ]; then echo "AWS_BUCKET_NAME needs to be set"; exit 1; fi
   export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
   export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
-  export AWS_KMS_ID="${AWS_KMS_ID}"
   export AWS_BUCKET_NAME="${AWS_BUCKET_NAME}"
 fi
 export KUBERNETES_POD_NAME="${KUBERNETES_POD_NAME:-localhost}"
@@ -18,12 +17,5 @@ export CASSANDRA_HOST="${CASSANDRA_HOST:-localhost}"
 export CASSANDRA_PORT="${CASSANDRA_PORT:-7199}"
 export CASSANDRA_KEYSPACE="${CASSANDRA_KEYSPACE:-draios}"
 export CASSANDRA_DATA="${CASSANDRA_DATA:-/var/lib/cassandra/data}"
-export CRON_TIME_SPEC="${CRON_TIME_SPEC:-'0    0       *       *       *'}"
 
-echo "Setting schedule:${CRON_TIME_SPEC}"
-crontab -l \
-  | { cat; echo "${CRON_TIME_SPEC}       /usr/local/bin/backup >> /var/log/cron.log 2>&1"; } \
-  | crontab -
-
-touch /var/log/cron.log
-crond && tail -f /var/log/cron.log
+/usr/local/bin/backup
