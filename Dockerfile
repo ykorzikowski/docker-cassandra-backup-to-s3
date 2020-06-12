@@ -5,7 +5,7 @@ ENV JAVA_VERSION=8u111 \
     CASSANDRA_VERSION=2.2.8
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin:/opt/dsc-cassandra-${CASSANDRA_VERSION}/bin
+ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin:/opt/apache-cassandra-${CASSANDRA_VERSION}/bin
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -33,9 +33,9 @@ RUN apk -Uuv --no-cache add \
 
 # Download cassandra, for the nodetool binary
 RUN mkdir /opt && cd /opt && \
-    curl -O http://downloads.datastax.com/community/dsc-cassandra-${CASSANDRA_VERSION}-bin.tar.gz && \
-    tar xvf dsc-cassandra-${CASSANDRA_VERSION}-bin.tar.gz && \
-    chmod 755 dsc-cassandra-${CASSANDRA_VERSION}/bin
+    curl https://archive.apache.org/dist/cassandra/$CASSANDRA_VERSION/apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz | tar zxv && \
+    mv apache-cassandra-$CASSANDRA_VERSION . && \
+    chmod 755 apache-cassandra-${CASSANDRA_VERSION}/bin
 
 COPY backup /usr/local/bin/backup
 COPY entrypoint /usr/local/bin/entrypoint
