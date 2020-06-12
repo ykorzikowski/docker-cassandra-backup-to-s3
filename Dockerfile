@@ -2,7 +2,7 @@ FROM alpine:3.4
 
 ENV JAVA_VERSION=8u111 \
     JAVA_ALPINE_VERSION=8.111.14-r0 \
-    CASSANDRA_VERSION=2.2.8
+    CASSANDRA_VERSION=3.11.2
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
 ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin:/opt/apache-cassandra-${CASSANDRA_VERSION}/bin
