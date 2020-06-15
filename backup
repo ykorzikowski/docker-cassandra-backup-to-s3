@@ -6,7 +6,7 @@ TIME=`date "+%Y%m%d_%H%M"`
 FILENAME=${CASSANDRA_BACKUPS:-${CASSANDRA_DATA}}/${KUBERNETES_POD_NAME}_${CASSANDRA_KEYSPACE}_${TIME}.tar.gz
 
 echo "-- Creating new snapshot for ${CASSANDRA_KEYSPACE} called ${TIME} --"
-nodetool -h ${CASSANDRA_HOST} -p ${CASSANDRA_PORT} snapshot ${CASSANDRA_KEYSPACE} -t ${TIME}
+nodetool -u ${CASSANDRA_USER} -pw ${CASSANDRA_PASSWORD} -h ${CASSANDRA_HOST} -p ${CASSANDRA_PORT} snapshot ${CASSANDRA_KEYSPACE} -t ${TIME}
 
 echo "-- Archiving snapshots... --"
 
